@@ -38,7 +38,6 @@ doCountCurl() {
 }
 
 doGetURL() {
-    
     printf "\n$URL\n" 
     Cookie="Cookie:oraclelicense=accept-securebackup-cookie"
     curl -O -L -S -H "${Cookie}" --progress-bar --connect-timeout 55 --fail -k "${1}" 
@@ -62,7 +61,7 @@ doTestURL() {
         echo $URL >> $urlFile
         printf  "$version_local" > $tmpVersion
         printf  "$build_local" > $tmpBuild
-        printf  "$version_local.$build_local" > $tmpFile
+        printf  "${URL}" > $tmpFile
         break
     fi
 }
@@ -73,7 +72,7 @@ doFindVersionBuild() {
     PLATFORM=$3
     TYPE=$4
 
-	### If available use version to limit tree walking
+    ### If available use version to limit tree walking
     if [[ -e $tmpVersion ]]; then
         version_cnt=$(( `cat $tmpVersion` ))
     else
@@ -82,19 +81,19 @@ doFindVersionBuild() {
 
     while [[ $version_cnt -ge 1 ]] && [[ ! -e $tmpFile ]]; do
 
-	    ### If available use build to limit tree walking
-	    if [[ -e $tmpBuild ]]; then
+        ### If available use build to limit tree walking
+	if [[ -e $tmpBuild ]]; then
             build_cnt=$(( 10 + `cat $tmpBuild` ))
         else
             build_cnt=$build 
         fi
 
         ### Keep going until a version is found
-		while [[ $build_cnt -ge 1 ]] && [[ ! -e $tmpFile ]]; do
+	while [[ $build_cnt -ge 1 ]] && [[ ! -e $tmpFile ]]; do
             ### Limit HTTP connections to avoid saturating connection
-			maxHTTP=50; while [[ `doCountCurl` -ge ${maxHTTP} ]]; do sleep 1; done
+	    maxHTTP=50; while [[ `doCountCurl` -ge ${maxHTTP} ]]; do sleep 1; done
 			
-			### Send to background to speed up process
+            ### Send to background to speed up process
             doTestURL ${URI} ${BASE} ${version_cnt} ${build_cnt} ${PLATFORM} ${TYPE} &
             (( build_cnt-=1 ))
         done
@@ -103,19 +102,19 @@ doFindVersionBuild() {
         sleep 1
     done 
 
-	### Wait for current version/build series to finish before starting next round
+    ### Wait for current version/build series to finish before starting next round
     while [[ `doCountCurl` -gt 0 ]]; do sleep 1; done
 
-	### Save results to VERSION array.  Highest version will be element #1
+    ### Save results to VERSION array.  Highest version will be element #1
     set -A VERSION dummy `[[ -e $tmpFile ]] && sort -nr $tmpFile`
     echo ${VERSION[1]}
 	
-	### Cleanup
+    ### Cleanup
     if [[ -e $tmpFile ]]; then
         rm $tmpFile
     else
-         [[ -e $tmpVersion ]] && rm $tmpVersion
-         [[ -e $tmpBuild ]] && rm $tmpBuild
+        [[ -e $tmpVersion ]] && rm $tmpVersion
+        [[ -e $tmpBuild ]] && rm $tmpBuild
     fi
 }
 
@@ -127,6 +126,9 @@ tmpVersion=$$-version.txt
 tmpBuild=$$-build.txt
 urlFile=url.txt
 
+clear
+printf  "Searching for available versions...\n\n"
+
 for base in ${BASE[@]}; do
     for type in $(echo jre jdk); do
         printf "# `date`\n" >> $urlFile
@@ -134,12 +136,13 @@ for base in ${BASE[@]}; do
             URI=otn-pub/java/jdk/
             doFindVersionBuild ${URI} ${base} ${platform} ${type}
         done
-    doneA
-	### Delete version and build markers before attempting next BASE version. 
+    done
+    ### Delete version and build markers before attempting next BASE version. 
     [[ -e $tmpVersion ]] && rm $tmpVersion
     [[ -e $tmpBuild ]] && rm $tmpBuild
 done
 
+printf  "Downloading...\n\n"
 for URL in $( grep -vi "#" $urlFile ); do
     doGetURL "$URL"
 done
