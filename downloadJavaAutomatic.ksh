@@ -21,12 +21,25 @@
 # http://download.oracle.com/otn-pub/java/jdk/8u40-b27/jdk-8u40-macosx-x64.dmg
 
 ###################################
+## Usage
+###################################
+
+# downloadJavaAutomatic.ksh
+# Finds and downloads current Java versions
+
+# downloadJavaAutomatic.ksh [-f <file>]
+# Skips version/build find routing, uses external <file>
+# which contains a list of URLs to be downloaded.
+ 
+
+###################################
 ## Config
 ###################################
 version=99
 build=30
 
 set -A BASE 8 7 6 
+set -A BASE 7 
 set -A PLATFORMS -- -linux-x64.tar.gz -linux-i586.tar.gz -macosx-x64.dmg -windows-i586.exe -windows-x64.exe 
 
 ###################################
@@ -122,6 +135,13 @@ doFindVersionBuild() {
     fi
 }
 
+doDownload() {
+    printf "\nDownloading...\n"
+    for URL in $( grep -vi "#" $urlFile ); do
+        doGetURL "$URL"
+    done
+}
+    
 #########################
 ### Main 
 #########################
@@ -131,23 +151,26 @@ tmpBuild=$$-build.txt
 urlFile=url.txt
 
 clear
-printf "Searching for available versions...\n\n"
+if [[ $1 = "-f" ]] && [[ -r "$2" ]]; then
+    echo "Search for version/build bypassed.  Using URLs within file: $2"
+    urlFile=$2
+    doDownload
+else
+    printf "Searching for available versions...\n\n"
 
-for base in ${BASE[@]}; do
-    for type in $(echo jre jdk); do
-        printf "# `date`\n" >> $urlFile
-        for platform in ${PLATFORMS[@]}; do
-            URI=otn-pub/java/jdk/
-            doFindVersionBuild ${URI} ${base} ${platform} ${type}
+    for base in ${BASE[@]}; do
+        for type in $(echo jre jdk); do
+            printf "# `date`\n" >> $urlFile
+            for platform in ${PLATFORMS[@]}; do
+                URI=otn-pub/java/jdk/
+                doFindVersionBuild ${URI} ${base} ${platform} ${type}
+            done
         done
+        ### Delete version and build markers before attempting next BASE version. 
+        [[ -e $tmpVersion ]] && rm $tmpVersion
+        [[ -e $tmpBuild ]] && rm $tmpBuild
     done
-    ### Delete version and build markers before attempting next BASE version. 
-    [[ -e $tmpVersion ]] && rm $tmpVersion
-    [[ -e $tmpBuild ]] && rm $tmpBuild
-done
+    doDownload
+fi
 
-printf "Downloading...\n\n"
-for URL in $( grep -vi "#" $urlFile ); do
-    doGetURL "$URL"
-done
 [[ -e $urlFile ]] && rm $urlFile
