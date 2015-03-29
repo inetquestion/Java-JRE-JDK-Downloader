@@ -1,0 +1,33 @@
+# Sun Mar 29 11:36:12 EDT 2015
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jre-8u45-linux-x64.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jre-8u45-linux-i586.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jre-8u45-macosx-x64.dmg
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jre-8u45-windows-i586.exe
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jre-8u45-windows-x64.exe
+# Sun Mar 29 11:38:22 EDT 2015
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jdk-8u45-linux-x64.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jdk-8u45-linux-i586.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jdk-8u45-macosx-x64.dmg
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jdk-8u45-windows-i586.exe
+http://download.oracle.com/otn-pub/java/jdk/8u45-b13/jdk-8u45-windows-x64.exe
+# Sun Mar 29 11:38:37 EDT 2015
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jre-7u80-linux-x64.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jre-7u80-linux-i586.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jre-7u80-macosx-x64.dmg
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jre-7u80-windows-i586.exe
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jre-7u80-windows-x64.exe
+# Sun Mar 29 11:39:32 EDT 2015
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jdk-7u80-linux-x64.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jdk-7u80-linux-i586.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jdk-7u80-macosx-x64.dmg
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jdk-7u80-windows-i586.exe
+http://download.oracle.com/otn-pub/java/jdk/7u80-b14/jdk-7u80-windows-x64.exe
+# Sun Mar 29 11:39:46 EDT 2015
+http://download.oracle.com/otn-pub/java/jdk/6u91-b13/jre-6u91-linux-x64.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/6u91-b13/jre-6u91-linux-i586.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/6u91-b13/jre-6u91-windows-i586.exe
+http://download.oracle.com/otn-pub/java/jdk/6u35-b10/jre-6u35-windows-x64.exe
+# Sun Mar 29 11:45:35 EDT 2015
+http://download.oracle.com/otn-pub/java/jdk/6u91-b13/jdk-6u91-linux-i586.tar.gz
+http://download.oracle.com/otn-pub/java/jdk/6u91-b13/jdk-6u91-windows-i586.exe
+http://download.oracle.com/otn-pub/java/jdk/6u91-b13/jdk-6u91-windows-x64.exe

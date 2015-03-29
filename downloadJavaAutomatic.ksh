@@ -107,7 +107,11 @@ doFindVersionBuild() {
 
     ### Save results to VERSION array.  Highest version will be element #1
     set -A VERSION dummy `[[ -e $tmpFile ]] && sort -nr $tmpFile`
-    echo ${VERSION[1]}
+    if [[ "${VERSION[1]}" != "" ]]; then
+        echo ${VERSION[1]}
+    else
+        printf -- "${TYPE}-${BASE}u??${PLATFORM} - No Version found.\n"
+    fi
 	
     ### Cleanup
     if [[ -e $tmpFile ]]; then
@@ -127,7 +131,7 @@ tmpBuild=$$-build.txt
 urlFile=url.txt
 
 clear
-printf  "Searching for available versions...\n\n"
+printf "Searching for available versions...\n\n"
 
 for base in ${BASE[@]}; do
     for type in $(echo jre jdk); do
@@ -142,7 +146,7 @@ for base in ${BASE[@]}; do
     [[ -e $tmpBuild ]] && rm $tmpBuild
 done
 
-printf  "Downloading...\n\n"
+printf "Downloading...\n\n"
 for URL in $( grep -vi "#" $urlFile ); do
     doGetURL "$URL"
 done
