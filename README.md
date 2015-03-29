@@ -1,8 +1,8 @@
 Downloads JDK & JRE from download.oracle.com by first walking possible combinations of available version/build numbers.
 Once a version/build is found, subsequent attempts in the same family are primed to avoid walking the entire tree again.
  
-version=<x> represents the highest attempted version number while walking the tree
-build=<y> represents the highest attempted build number while walking the tree
+version=<x> represents the highest attempted version number while walking the tree.
+build=<y> represents the highest attempted build number while walking the tree.
 
 Adjust "BASE" to control which versions are downloaded.  A value of 8 corresponds to Java-v1.8.x
 Likewise a value of "6 7 8" equates to Java-v1.6.x, Java-v1.7.x, Java-v1.8.x
